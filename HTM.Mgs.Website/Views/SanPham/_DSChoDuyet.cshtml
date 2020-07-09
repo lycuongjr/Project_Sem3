@@ -1,0 +1,54 @@
+﻿@using MvcContrib.UI.Grid;
+@using HTM.Mgs.Models;
+@model PagedList.IPagedList<SanPham>
+@using PagedList.Mvc;
+@using HTM.Mgs.HtmlEx
+@using HTM.Mgs.HtmlExtension
+@{
+    var session = (HTM.Mgs.Common.UserLogin)Session[HTM.Mgs.Common.CommonConstants.USER_SESSION];
+}
+<style>
+    .centerBlock {
+        display: table;
+        margin: auto;
+    }
+</style>
+<div class="card-body">
+    <div class="table table-bordered table-striped">
+
+        @Html.Grid(Model).Columns(column =>
+    {
+column.Custom(@<div class="dropdown grid-command">
+                <div class="sett" data-toggle="dropdown"></div>
+                <ul class="dropdown-menu sett_dropdown-caret">
+                    @if (item.DaPheDuyet == true)
+                             {
+                        <li class="pop_arrow_new"></li>
+                        <li onclick="PheDuyetSanPham(@item.SanPhamId)"><span><i class="fa fa-check"></i>@(item.DaPheDuyet == false ? "Thông qua" : "Từ chối")</span></li>
+                             }
+
+                </ul>
+            </div>).Named("<i class='far fa-hand-point-up'></i>").Attributes(style => "text-align:center;width:5%");
+column.For(m => Html.Raw("<div class='btn-group'>"
++ "<a href='#' onclick='LoadSanPhamChiTiet(" + m.SanPhamId + ")' data-toggle='modal' data-target='.bd-example-modal-lg'>" + m.MaSanPham + "</a>" + "</div>")).Named("Mã sản phẩm").Attributes(style => "width:10%");
+column.For(m => m.TenSanPham).Named("Tên sản phẩm").Attributes(style => "width:10%");
+column.For(m => m.MaSanPham).Named("Mã sản phẩm").Attributes(style => "width:10%");
+column.For(m => m.TieuDe).Named("Tiêu đề").Attributes(style => "width:10%");
+column.For(m => Html.Raw("<img src ='" + m.GetDefautThumbnail() + "'style='width:100% ' />")).Named("Ảnh").Attributes(style => "width:10%");
+column.For(m => m.Gia).Named("Giá").Attributes(style => "width:10%");
+column.For(m => m.SoLuong).Named("Số lượng").Attributes(style => "width:10%");
+column.For(m => m.TheLoai.TenTheLoai).Named("Thể loại").Attributes(style => "width:10%");
+column.For(m => m.NguoiTao).Named("Người tạo").Attributes(style => "width:10%");
+column.For(m => m.NgayTao).Named("Ngày tạo").Attributes(style => "width:10%");
+column.For(m => Html.StatusDisplay(m.TrangThai)).Named("Trạng thái").Attributes(style => "width:5%").HeaderAttributes(style => "text-align:center;");
+}).Empty("Chưa có dữ liệu sản phẩm")
+
+    </div>
+</div>
+<div class="form-group centerBlock">
+    @Html.PagedListPager(Model, PageCurrent => "javascript:ListStudent(null,null,null," + PageCurrent + ViewBag.MaSanPham + ViewBag.TenSanPham + ")", PagedRenderOptionExtension.ClassicCustomPage)
+</div>
+
+
+
+

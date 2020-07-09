@@ -1,0 +1,154 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section header{
+    Danh mục sản phẩm chờ duyệt
+}
+<div class="pcoded-inner-content">
+    <!-- Main-body start -->
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "form1" }))
+    {
+        @Html.Hidden("Page")
+        <div class="main-body">
+            <div class="page-wrapper">
+                <!-- Page-body start -->
+                <div class="page-body">
+                    <!-- Basic table card start -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>Danh sách sản phẩm</h5>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row align-items-center">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label>Thông tin sản phẩm</label>
+                                            <div class="row">
+                                                <div class="col-5">
+                                                    @Html.TextBox("MaSanPham", null, new { @class = "form-control", @placeholder = "Nhập mã sản phẩm" })
+                                                </div>
+                                                <div class="col-5">
+                                                    @Html.TextBox("TenSanPham", null, new { @class = "form-control", @placeholder = "Nhập tên sản phẩm" })
+                                                </div>
+                                                <div class="col-2">
+                                                    <button class="btn btn-secondary" id="btnTimKiem" type="button"><i class="fas fa-search"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row table-responsive">
+                                <div class="table table-bordered table-hover text-center align-middle" id="tblSanPham">
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Page-body end -->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thông tin sản phẩm</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="ddlForm">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+        $(document).ready(function () {
+            $("#btn-Create").click(function () {
+                window.location = "/SanPham/Form";
+            })
+        });
+        function ListDanhSachSanPham(MaSanPham, TenSanPham, PageCurrent) {
+            $.ajax({
+            url: '@Url.Action("LoadDanhSanPhamChoNhapkho")',
+            data: {
+                MaSanPham: MaSanPham,
+                TenSanPham: TenSanPham,
+                PageCurrent: PageCurrent
+            },
+            type: "GET",
+            dataType: "html",
+            success: function (data) {
+                $("#tblSanPham").html(data);
+            },
+            error: function () {
+
+            },
+            complete: function (data) {
+
+            }
+                 });
+        }
+        ListDanhSachSanPham();
+        $('#btnTimKiem').click(function () {
+            var masp = $("#MaSanPham").val();
+            var tensp = $("#TenSanPham").val();
+            ListDanhSachSanPham(masp, tensp);
+        });
+        function PheDuyetYeuCauNhapKho(id) {
+            $.ajax({
+                 url: '@Url.Action("PheDuyetYeuCauNhapKho")',
+                type: 'POST',
+                data: { id: id },
+                dataType: 'json',
+                success: function (data) {
+                    if (data.status) {
+                       toastr.success('Sản phẩm đã được thông qua.')
+                        ListDanhSachSanPham();
+                    } else {
+                        alert('Có lỗi xảy ra.')
+                    }
+                },
+                error: function (data) {
+                    alert('Không thể thay đổi sản phẩm.')
+                }
+            })
+        };
+        function LoadSanPhamChiTiet(Id) {
+
+            $.ajax({
+                url: '/SanPham/_SanPhamChiTiet/' + Id,
+                data: {
+                    Id: Id,
+
+                },
+                type: "GET",
+                dataType: "html",
+                success: function (data) {
+                    $("#ddlForm").html(data);
+                }
+                ,
+                error: function () {
+
+                },
+                complete: function (data) {
+
+                }
+            });
+        }
+    </script>
+}

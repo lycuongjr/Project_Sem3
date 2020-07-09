@@ -1,0 +1,46 @@
+﻿@model HTM.Mgs.Models.NguoiDung
+@using HTM.Mgs.HtmlExtension
+<div id="formQuyenSuDung">
+    @using (Html.BeginForm())
+    {
+
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    @Html.Label("Quyền sử dụng:", new { @class = "control-label" })
+                    <span class="required"> (*)</span>
+                    <div id="ddlQuyenSuDung2">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-12">
+            @Html.Button("Ghi lại", "btn btn-success", "btnSave", "fa fa-floppy-o")
+        </div>
+
+
+    }
+</div>
+<script>
+    $(document).ready(function () {
+        $("#btnSave").click(function () {
+            $("#formQuyenSuDung form").submit();
+        });
+    })
+    function ListQuyenSuDung2(NhomQuyenSuDungId) {
+        $.ajax({
+            url: '@Url.Action("_LoaDanhSachPhanQuyen")',
+            data: {
+                NhomQuyenSuDungId: NhomQuyenSuDungId
+            },
+            type: "POST",
+            dataType: "html",
+            success: function (data) {
+                $("#ddlQuyenSuDung2").html(data);
+            },
+            complete: function (data) {
+            }
+        });
+    }
+    ListQuyenSuDung2('@Model.NhomQuyenSuDungID');
+</script>

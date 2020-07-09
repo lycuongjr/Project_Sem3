@@ -1,0 +1,122 @@
+﻿@model HTM.Mgs.Models.YeuCauNguoiDung
+@using HTM.Mgs.HtmlExtension
+@{
+    var session = (HTM.Mgs.Common.UserLogin)Session[HTM.Mgs.Common.CommonConstants.USER_SESSION];
+
+    var HanMuc = session.GioiHan - (session.SoLuong * session.Gia);
+    Layout = null;
+    }
+  
+
+    <div id="formYeuCau">
+        @using (Html.BeginForm())
+        {
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        @Html.Label("Chọn thể loại:", new { @class = "control-label" })
+                        <span class="required"> (*)</span>
+                        <div id="ddlTheLoai">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <!-- text input -->
+                    <div class="form-group">
+                        @Html.Label("Chọn sản phẩm", new { @class = "control-label" })
+                        <span class="required"> (*)</span>
+                        <div id="ddlSanPham">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <!-- text input -->
+                    <div class="form-group">
+                        @Html.Label("Nội dung", new { @class = "control-label" })
+                        @Html.TextArea("NoiDung", null, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <!-- text input -->
+                    <div class="form-group">
+                        @Html.Label("Số lượng", new { @class = "control-label" })
+                        @Html.TextBox("SoLuong", null, new { type = "number", min = "1", max = "10", step = "1" })
+                        @*<input type="number" name="SoLuong" value="SoLuong"  min="1" max="10" step="1" />*@
+                    </div>
+                </div>
+            </div>
+            if (HanMuc <= 0)
+            {
+                <div class="col-sm-12">
+                    <span class="text-danger">Bạn đã sử dụng quá giới hạn số tiền cho phép</span>
+                </div>
+            }
+            else if (HanMuc >= 0)
+            {
+                <div class="col-sm-12">
+                    <span class="text-danger">Hạn mức còn : @(HanMuc.Value.ToString ("N0")) </span>
+                </div>
+                <div class="col-sm-12">
+                    @Html.Button("Ghi lại", "btn btn-success", "btnGhiLai", "fa fa-floppy-o")
+                </div>
+
+            }
+            {
+
+            }
+
+
+        }
+
+    </div>
+
+
+
+<script>
+    $(document).ready(function () {
+        $("#btnGhiLai").click(function () {
+            $("#formYeuCau form").submit();
+        });
+    $("input[type='number']").inputSpinner()
+
+    })
+    function ListTheLoai(TheloaiId, SanPhamId) {
+        $.ajax({
+            url: '@Url.Action("_LoadDanhSachTheoLoai")',
+            data: {
+                TheloaiId: TheloaiId,
+                SanPhamId: SanPhamId
+            },
+            type: "POST",
+            dataType: "html",
+            success: function (data) {
+                $("#ddlTheLoai").html(data);
+            },
+            complete: function (data) {
+            }
+        });
+    }
+    function ListSanPham(SanPhamId) {
+        $.ajax({
+            url: '@Url.Action("_LoadDanhSachTheoSanPham")',
+            data: {
+                SanPhamId: SanPhamId
+            },
+            type: "POST",
+            dataType: "html",
+            success: function (data) {
+                $("#ddlSanPham").html(data);
+            },
+            complete: function (data) {
+            }
+        });
+        }
+    ListTheLoai('@Model.TheLoaiId', '@Model.SanPhamId');
+    ListSanPham('@Model.SanPhamId');
+
+</script>

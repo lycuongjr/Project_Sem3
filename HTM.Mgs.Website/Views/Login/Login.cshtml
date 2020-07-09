@@ -1,0 +1,155 @@
+﻿@model HTM.Mgs.Models.LoginModel
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Mega Able bootstrap admin template by codedthemes </title>
+    @Styles.Render("~/Layout/css")
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
+    <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
+
+</head>
+
+<body themebg-pattern="theme1">
+    <div class="theme-loader">
+        <div class="loader-track">
+            <div class="preloader-wrapper">
+                <div class="spinner-layer spinner-blue">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+                <div class="spinner-layer spinner-red">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+
+                <div class="spinner-layer spinner-yellow">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+
+                <div class="spinner-layer spinner-green">
+                    <div class="circle-clipper left">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="gap-patch">
+                        <div class="circle"></div>
+                    </div>
+                    <div class="circle-clipper right">
+                        <div class="circle"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="login-block">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                    @using (Html.BeginForm("Login", "Login", FormMethod.Post, new { @class = "md-float-material form-material" }))
+                    {
+
+                        <div class="text-center">
+                            <img src="https://thietkemythuat.com/wp-content/uploads/Logo-vpp-tien-phong.jpg" width="10%" alt="logo.png">
+                        </div>
+                        <div class="auth-box card">
+                            <div class="card-block">
+                                <div class="row m-b-20">
+                                    <div class="col-md-12">
+                                        <h3 class="text-center">Đăng nhập hệ thống</h3>
+                                    </div>
+                                </div>
+                                <div class="form-group form-primary">
+                                    @Html.TextBoxFor(model => model.UserName, new { @class = "form-control", @autofocus = "autofocus" })
+                                    <span class="form-bar"></span>
+                                    <label class="float-label">Tên đăng nhập</label>
+                                </div>
+                                <div class="form-group form-primary">
+                                    @Html.PasswordFor(model => model.Password, new { @class = "form-control" })
+                                    <span class="form-bar"></span>
+                                    <label class="float-label">Mật khẩu</label>
+                                </div>
+                                <div class="row m-t-25 text-left">
+                                    <div class="col-12">
+                                        <div class="checkbox-fade fade-in-primary d-">
+                                            <label>
+                                                @Html.CheckBoxFor(model => model.RememberMe)
+                                                <span class="cr"><i class="cr-icon icofont icofont-ui-check txt-primary"></i></span>
+                                                <span class="text-inverse">Ghi nhớ mật khẩu</span>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style="text-align:center; margin : auto" class="mt-5">
+                                    @Html.ValidationSummary(true, "", new { @class = " text-danger" })
+                                </div>
+                                <div class="row m-t-30">
+                                    <div class="col-md-12">
+                                        <button type="submit" class="btn btn-primary btn-md btn-block waves-effect waves-light text-center m-b-20">Đăng nhập</button>
+                                    </div>
+                                </div>
+                                <hr />
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </section>
+    @Scripts.Render("~/Layout/Js")
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.2/dist/jquery.validate.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('form').validate({
+                messages: {
+                    UserName: {
+                        required: "Tên đăng nhập không được bỏ trống"
+                    },
+                    Password: {
+                        required: "Mật khẩu không được bỏ trống",
+                        minlength: "Mật khẩu phải có nhiều hơn 6 kí tự"
+                    }
+                },
+                rules: {
+                    UserName: {
+                        required: true
+                    },
+                    Password: {
+                        required: true,
+                        minlength: 6
+                        
+                    }
+                }
+
+            })
+        })
+    </script>
+</body>
+
+</html>

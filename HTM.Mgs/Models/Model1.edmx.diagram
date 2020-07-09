@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="80fca18b398c48929be2b1667a750e63" Name="Diagram1">
+        <EntityTypeShape EntityType="HTM.MgsDBModel.BaoCao" Width="1.5" PointX="2.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HTM.MgsDBModel.ChucNangNguoiDung" Width="1.5" PointX="3.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="HTM.MgsDBModel.ChucVu" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HTM.MgsDBModel.NguoiDung" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="HTM.MgsDBModel.NhapKho" Width="1.5" PointX="4.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HTM.MgsDBModel.NhomNguoiDung" Width="1.5" PointX="6" PointY="5.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="HTM.MgsDBModel.NhomQuyenSuDung" Width="1.5" PointX="0.75" PointY="5.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="HTM.MgsDBModel.SanPham" Width="1.5" PointX="8.25" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HTM.MgsDBModel.TheLoai" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="HTM.MgsDBModel.VanPhong" Width="1.5" PointX="0.75" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="HTM.MgsDBModel.YeuCauNguoiDung" Width="1.5" PointX="6.75" PointY="9.75" IsExpanded="true" />
+        <AssociationConnector Association="HTM.MgsDBModel.FK_NhomNguoiDung_ChucNangNguoiDung" ManuallyRouted="false" />
+        <AssociationConnector Association="HTM.MgsDBModel.FK_NguoiDung_ChucVu" ManuallyRouted="false" />
+        <AssociationConnector Association="HTM.MgsDBModel.FK_NguoiDung_NhomQuyenSuDung" ManuallyRouted="false" />
+        <AssociationConnector Association="HTM.MgsDBModel.FK_NguoiDung_VanPhong" ManuallyRouted="false" />
+        <AssociationConnector Association="HTM.MgsDBModel.FK_SanPham_NguoiDung" ManuallyRouted="false" />
+        <AssociationConnector Association="HTM.MgsDBModel.FK_NhomNguoiDung_NhomQuyenSuDung" ManuallyRouted="false" />
+        <AssociationConnector Association="HTM.MgsDBModel.FK_SanPham_TheLoai" ManuallyRouted="false" />
+        <AssociationConnector Association="HTM.MgsDBModel.FK_BaoCao_NhapKho" />
+        <AssociationConnector Association="HTM.MgsDBModel.FK_YeuCauNguoiDung_NguoiDung" />
+        <AssociationConnector Association="HTM.MgsDBModel.FK_YeuCauNguoiDung_SanPham" />
+        <AssociationConnector Association="HTM.MgsDBModel.FK_YeuCauNguoiDung_TheLoai" />
+        <AssociationConnector Association="HTM.MgsDBModel.FK_TheLoai_SanPham" />
+        <AssociationConnector Association="HTM.MgsDBModel.FK_NguoiDung_SanPham" />
+        <AssociationConnector Association="HTM.MgsDBModel.FK_NguoiDung_YeuCauNguoiDung" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,86 @@
+﻿@using HTM.Mgs.Models
+@model PagedList.IPagedList<NguoiDung>
+@using PagedList.Mvc;
+@using HTM.Mgs.HtmlEx
+@using HTM.Mgs.HtmlExtension
+@using MvcContrib.UI.Grid;
+@{
+    ViewBag.Title = "DanhSachNguoiDungChuaHoatDong";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section header{
+    Danh mục người dùng chưa được thông qua
+}
+<!-- Page-header start -->
+<!-- Page-header end -->
+<div class="pcoded-inner-content">
+    <!-- Main-body start -->
+    @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "form1" }))
+    {
+        @Html.Hidden("Page")
+        <div class="main-body">
+            <div class="page-wrapper">
+                <!-- Page-body start -->
+                <div class="page-body">
+                    <!-- Basic table card start -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h5>Danh sách người dùng</h5>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="row align-items-center">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label>Thông tin tài khoản</label>
+                                            <div class="row">
+                                                <div class="col-5">
+                                                    @Html.TextBox("MaNhanVien", null, new { @class = "form-control", @placeholder = "Nhập mã người dùng" })
+                                                </div>
+                                                <div class="col-5">
+                                                    @Html.TextBox("HoVaTen", null, new { @class = "form-control", @placeholder = "Nhập tên người dùng" })
+                                                </div>
+                                                <div class="col-2">
+                                                    <button class="btn btn-secondary" id="btnTimKiem" type="button"><i class="fas fa-search"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row table-responsive">
+                                <div class="table table-bordered table-hover text-center align-middle">
+                                    <div class="card-body">
+                                        <div class="table table-bordered table-striped">
+                                            @Html.Grid(Model).Columns(column =>
+                                       {
+                                            
+ //column.For(m => Html.htmlCheckBox("cbxItem", m.StudentID)).Named(Html.htmlCheckBox("cbxList").ToString()).Attributes(style => "width:5%");
+ column.For(m => Html.Raw("<div class='btn-group'>"
+ + "<a href='#' type='button' onclick='ShowDialog2(" + m.NguoiDungID + ")'>" + m.MaNhanVien + "</a>" + "</div>")).Named("Mã nhân viên").Attributes(style => "width:10%");
+ column.For(m => m.HoVaTen).Named("Họ và tên").Attributes(style => "width:25%");
+ column.For(m => m.Email).Named("Email").Attributes(style => "width:25%");
+ column.For(m => m.ChucVu.TenChucVu).Named("Chức vụ").Attributes(style => "width:10%");
+ column.For(m => m.VanPhong.TenVanPhong).Named("Văn phòng").Attributes(style => "width:15%");
+ column.For(m => m.NgayXoa).Named("Đã xóa ngày").Attributes(style => "width:15%");
+}).Empty("Chưa có dữ liệu sinh viên")
+                                        </div>
+                                    </div>
+                                    <div class="form-group centerBlock">
+                                        @Html.PagedListPager(Model, PageCurrent => "javascript:ListStudent(null,null,null," + PageCurrent + ")", PagedRenderOptionExtension.ClassicCustomPage)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Page-body end -->
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    }
+</div>

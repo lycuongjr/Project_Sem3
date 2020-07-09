@@ -1,0 +1,42 @@
+﻿@using MvcContrib.UI.Grid;
+@using HTM.Mgs.Models
+@model PagedList.IPagedList<NguoiDung>
+@using PagedList.Mvc;
+@using HTM.Mgs.HtmlEx
+@using HTM.Mgs.HtmlExtension
+<style>
+    .centerBlock {
+        display: table;
+        margin: auto;
+    }
+</style>
+<div class="card-body">
+    <div class="table table-bordered table-striped">
+        @Html.Grid(Model).Columns(column =>
+   {
+        column.Custom(@<div class="dropdown grid-command">
+                <div class="sett" data-toggle="dropdown"></div>
+                <ul class="dropdown-menu sett_dropdown-caret">
+                    <li class="pop_arrow_new"></li>
+                    <li onclick="LoadAdd(@item.NguoiDungID)" data-toggle="modal" data-target=".bd-example-modal-lg"><span><i class="fas fa-edit"></i> Hiệu chỉnh</span></li>
+                    <li onclick="ChangeStatus(@item.NguoiDungID)"><span><i class="fas fa-ban"></i> @(item.TrangThai == true ? "Vô hiệu" : "Kích hoạt")</span></li>
+                    <li onclick="ShowDialog(@item.NguoiDungID)"><span><i class="fas fa-user-cog"></i> Thay đổi quyền</span></li>
+                    <li onclick="Delete(@item.NguoiDungID)" class="cmd-save"><span><i class="fas fa-trash"></i> Xóa</span></li>
+
+                </ul>
+            </div>).Named("<i class='far fa-hand-point-up'></i>").Attributes(style => "text-align:center;width:5%");
+       //column.For(m => Html.htmlCheckBox("cbxItem", m.StudentID)).Named(Html.htmlCheckBox("cbxList").ToString()).Attributes(style => "width:5%");
+       column.For(m => Html.Raw("<div class='btn-group'>"
+       + "<a href = '/NguoiDung/ThongTinChiTiet/" + m.NguoiDungID +"'>" + m.MaNhanVien + "</a>" + "</div>")).Named("Mã nhân viên").Attributes(style => "width:10%");
+       column.For(m => m.HoVaTen).Named("Họ và tên").Attributes(style => "width:10%");
+       column.For(m => m.Email).Named("Email").Attributes(style => "width:15%");
+       column.For(m => m.ChucVu.TenChucVu).Named("Chức vụ").Attributes(style => "width:10%");
+       column.For(m => m.VanPhong.TenVanPhong).Named("Văn phòng").Attributes(style => "width:20%");
+       column.For(m => m.GioiHan.HasValue ? m.GioiHan.Value.ToString ("N0") : "" ).Named("Hạn mức").Attributes(style => "width:10%");
+       column.For(m => Html.StatusDisplay(m.TrangThai)).Named("Trạng thái").Attributes(style => "width:5%").HeaderAttributes(style => "text-align:center;");
+   }).Empty("Chưa có dữ liệu sinh viên")
+    </div>
+</div>
+<div class="form-group centerBlock">
+    @Html.PagedListPager(Model, PageCurrent => "javascript:ListStudent(MaNhanVien,HoVaTen," + PageCurrent + ")", PagedRenderOptionExtension.ClassicCustomPage)
+</div>

@@ -1,0 +1,120 @@
+﻿@model HTM.Mgs.Models.YeuCauNguoiDung
+@using HTM.Mgs.HtmlExtension
+@{
+    Layout = null;
+    var session = (HTM.Mgs.Common.UserLogin)Session[HTM.Mgs.Common.CommonConstants.USER_SESSION];
+
+    var HanMucConLai = session.GioiHan - (session.SoLuong * session.Gia);
+   
+}
+<style>
+    .disabledbutton {
+        pointer-events: none;
+        opacity: 0.9;
+    }
+</style>
+    <div id="formYeuCau">
+        @using (Html.BeginForm())
+        {
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        @Html.Label("Loại sản phẩm", new { @class = "control-label" })
+                        <span class="required"> (*)</span>
+                        <div id="ddlTheLoai" class="disabledbutton">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <!-- text input -->
+                    <div class="form-group">
+                        @Html.Label("Sản phẩm đã chọn", new { @class = "control-label", disabled = "true" })
+                        <span class="required">(*)</span>
+                        <div id="ddlSanPham" class="disabledbutton">
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <!-- text input -->
+                    <div class="form-group">
+                        @Html.Label("Nội dung", new { @class = "control-label" })
+                        @Html.TextArea("NoiDung", null, new { @class = "form-control disabledbutton" })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <!-- text input -->
+                    <div class="form-group">
+                        @Html.Label("Số lượng", new { @class = "control-label" })
+                        @Html.TextBox("SoLuong", null, new { type = "number", min = "1", max = "10", step = "1", @class = "form-control disabledbutton" })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <!-- text input -->
+                    <div class="form-group">
+                        @Html.Label("Thành tiền", new { @class = "control-label" })
+                        @Html.TextBox(" ", ((Model.SoLuong * Model.SanPham.Gia).HasValue ? (Model.SoLuong * Model.SanPham.Gia).Value.ToString("N0"): "")  , new { @class = "form-control disabledbutton" })
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+       <div class="row">
+           <div class="col-sm-12">
+               @if (HanMucConLai < 0)
+               {
+                   <span class="text-danger">Bạn đã vượt quá hạn mức</span>
+               }
+               else
+               {
+                   <h3>Hạn mức còn : @(HanMucConLai.HasValue ? HanMucConLai.Value.ToString ("N0") : "")</h3>
+               }
+
+           </div>
+       </div>
+
+
+<script>
+    $("input[type='number']").inputSpinner()
+    $("#mydiv").addClass("disabledbutton");
+    function ListTheLoai(TheloaiId) {
+        $.ajax({
+            url: '/SanPham/_LoadDanhSachTheoLoai',
+            data: {
+                TheloaiId: TheloaiId,
+            },
+            type: "POST",
+            dataType: "html",
+            success: function (data) {
+                $("#ddlTheLoai").html(data);
+            },
+            complete: function (data) {
+            }
+        });
+    }
+     function ListSanPham(SanPhamId) {
+        $.ajax({
+            url: '/NhanVien/_LoadDanhSachTheoSanPham',
+            data: {
+                SanPhamId: SanPhamId
+            },
+            type: "POST",
+            dataType: "html",
+            success: function (data) {
+                $("#ddlSanPham").html(data);
+            },
+            complete: function (data) {
+            }
+        });
+        }
+     ListTheLoai('@Model.TheLoaiId');
+     ListSanPham('@Model.SanPhamId');
+
+</script>

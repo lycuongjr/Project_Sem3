@@ -1,0 +1,259 @@
+﻿@model HTM.Mgs.Models.NguoiDung
+@using HTM.Mgs.HtmlExtension
+
+    <div id="formNguoiDung">
+        @using (Html.BeginForm())
+        {
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <!-- text input -->
+                    <div class="form-group">
+                        @Html.Label("Mã sinh viên:", new { @class = "control-label" })
+                        <span class="required"> (*)</span>
+                        @Html.TextBox("MaNhanVien", null, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        @Html.Label("Họ và tên:", new { @class = "control-label" })
+                        <span class="required"> (*)</span>
+                        @Html.TextBox("HoVaTen", null, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <!-- text input -->
+                    <div class="form-group">
+                        @Html.Label("Tên đăng nhập", new { @class = "control-label" })
+                        <span class="required"> (*)</span>
+                        @Html.TextBox("TenDangNhap", null, new { @class = "form-control" })
+                        <div id="opTenTK"></div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        @Html.Label("Mật khẩu:", new { @class = "control-label" })
+                        <span class="required"> (*)</span>
+                        @Html.Password("MatKhau", null, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <!-- text input -->
+                    <div class="form-group">
+                        @Html.Label("Email", new { @class = "control-label" })
+                        <span class="required"> (*)</span>
+                        @Html.TextBox("Email", null, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        @Html.Label("Số điện thoại:", new { @class = "control-label" })
+                        <span class="required"> (*)</span>
+                        @Html.TextBox("DienThoai", null, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <!-- text input -->
+                    <div class="form-group">
+                        @Html.Label("Số CMT: (Nếu có)", new { @class = "control-label" })
+                        @Html.TextBox("Email", null, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        @Html.Label("Ngày sinh:", new { @class = "control-label" })
+                        <span class="required"> (*)</span>
+                        @Html.TextBox("NgaySinh", Model.NgaySinh.HasValue ? Model.NgaySinh.Value.ToString("dd/MM/yyyy") : "", new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <!-- text input -->
+                    <div class="form-group">
+                        @Html.Label("Chức vụ hiện tại", new { @class = "control-label" })
+                        <span class="required"> (*)</span>
+                        <div id="ddlChucVu">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        @Html.Label("Văn phòng:", new { @class = "control-label" })
+                        <span class="required"> (*)</span>
+                        <div id="ddlVanPhong">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <!-- text input -->
+                    <div class="form-group">
+                        @Html.Label("Địa chỉ", new { @class = "control-label" })
+                        @Html.TextArea("DiaChi", null, new { @class = "form-control" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <!-- textarea -->
+                <div class="form-group uploaded">
+                    <button type="button" id="upload_widget" class="btn btn-primary">Tải ảnh</button>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <!-- textarea -->
+                <div class="form-group">
+                    @Html.Label("Còn sử dụng:", new { @class = "control-label" })
+                    @Html.CheckBox("TrangThai")
+                </div>
+            </div>
+
+
+            <div class="col-sm-12">
+                @Html.Button("Ghi lại", "btn btn-success", "btnGhiLai", "fa fa-floppy-o")
+            </div>
+
+        }
+
+    </div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.2/dist/jquery.validate.js"></script>
+
+<script>
+    
+    $(document).ready(function () {
+        $("#btnGhiLai").click(function () {
+            $("#formNguoiDung form").validate({
+                messages: {
+                    MaNhanVien: {
+                        required: "Mã nhân viên không được bỏ trống"
+                    },
+                    HoVaTen: {
+                        required: "Họ và tên không được bỏ trống",
+
+                    },
+                    TenDangNhap: {
+                        required: "Tên đăng nhập không được bỏ trống"
+                    },
+                    MatKhau: {
+                        required: "Mật khẩu không được bỏ trống",
+                        minlength: "Mật khẩu phải có ít nhất 6 kí tự"
+
+                    },
+                    Email: {
+                        required: "Email không được bỏ trống",
+                        email: "Email không đúng định dạng"
+
+                    },
+                    NgaySinh: {
+                        required: "Ngày sinh không được bỏ trống"
+                    },
+                    DienThoai: {
+                        required: "Vui lòng nhập số điện thoại"
+                    }
+                },
+                rules: {
+                    MaNhanVien: {
+                        required: true
+                    },
+                    HoVaTen: {
+                        required: true
+                    },
+                    TenDangNhap: {
+                        required: true
+                    },
+                    MatKhau: {
+                        required: true,
+                        minlength: 6
+                    },
+                    Email: {
+                        required: true,
+                        email: true
+                    },
+                    NgaySinh: {
+                        required: true
+                    },
+                    DienThoai: {
+                        required: true
+                    }
+                }
+
+            })
+            $("#formNguoiDung form").submit();
+           
+        });
+        $("#TenDangNhap").keyup(function () {
+            var tenTK = $(this).val();
+            $.ajax({
+                url: '/NguoiDung/CheckTenTK/',
+                method: 'post',
+                data: {
+                    TenDangNhap: tenTK,
+                    ndID: ndID
+                },
+                dataType: 'json',
+                success: function (data) {
+                    var TenTK = $("#opTenTK");
+                    if (data == false) {
+                        TenTK.show();
+                        TenTK.text('Tên tài khoản đã tồn tại');
+                        TenTK.css('color', 'red');
+                    }
+                    else {
+                        //opTenDN.text('Tên doanh nghiệp có thể sử dụng');
+                        //opTenDN.css('color', 'green');
+                        TenTK.hide();
+                    }
+                },
+                error: function (err) {
+                    alert(err);
+                }
+            })
+        })
+    })
+    function ListChucVu(ChucVuId) {
+        $.ajax({
+            url: '@Url.Action("_LoadDanhSachChucVu")',
+            data: {
+            ChucVuId: ChucVuId
+            },
+            type: "POST",
+            dataType: "html",
+            success: function (data) {
+            $("#ddlChucVu").html(data);
+            },
+            complete: function (data) {
+            }
+            });
+            }
+            function ListVanPhong(ChucVuId, VanPhongId) {
+            $.ajax({
+            url: '@Url.Action("_LoadDanhSachVanPhong")',
+            data: {
+            ChucVuId: ChucVuId,
+            VanPhongId: VanPhongId
+            },
+            type: "POST",
+            dataType: "html",
+            success: function (data) {
+            $("#ddlVanPhong").html(data);
+            },
+            complete: function (data) {
+            }
+            });
+            }
+            ListChucVu('@Model.ChucVuId');
+            ListVanPhong('@Model.ChucVuId', '@Model.VanPhongId');
+            ListQuyenSuDung('@Model.NhomQuyenSuDungID');
+    var ndID = $("#NguoiDungID").val();
+
+
+            </script>

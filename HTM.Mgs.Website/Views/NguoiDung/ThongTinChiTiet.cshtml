@@ -1,0 +1,129 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model HTM.Mgs.Models.NguoiDung
+@using HTM.Mgs.HtmlExtension
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-primary card-outline">
+            <div class="card-body box-profile">
+                <div class="text-center">
+                    <img class="profile-user-img img-fluid img-circle" src="@Model.AnhDaiDien" width="10%">
+                </div>
+                <h3 class="profile-username text-center">@Model.HoVaTen</h3>
+                <p class="text-muted text-center">@Model.ChucVu.TenChucVu</p>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div id="formNguoiDung">
+                            @using (Html.BeginForm())
+                            {
+
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <!-- text input -->
+                                        <div class="form-group disabled">
+                                            @Html.Label("Mã nhân viên:", new { @class = "control-label" })
+                                            @Html.TextBox("MaNhanVien", null, new { @class = "form-control", disabled = "true" })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group disabled">
+                                            @Html.Label("Họ và tên:", new { @class = "control-label" })
+                                            @Html.TextBox("HoVaTen", null, new { @class = "form-control", disabled = "true" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <!-- text input -->
+                                        <div class="form-group disabled">
+                                            @Html.Label("Tên đăng nhập", new { @class = "control-label" })
+                                            <span class="required"> (*)</span>
+                                            @Html.TextBox("TenDangNhap", null, new { @class = "form-control", disabled = "true" })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group disabled">
+                                            @Html.Label("Mật khẩu:", new { @class = "control-label" })
+                                            <span class="required"> (*)</span>
+                                            @Html.Password("MatKhau", null, new { @class = "form-control", disabled = "true" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <!-- text input -->
+                                        <div class="form-group disabled">
+                                            @Html.Label("Email", new { @class = "control-label" })
+                                            @Html.TextBox("Email", null, new { @class = "form-control", disabled = "true" })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="form-group disabled">
+                                            @Html.Label("Số điện thoại:", new { @class = "control-label" })
+                                            @Html.TextBox("DienThoai", null, new { @class = "form-control", disabled = "true" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <!-- text input -->
+                                        <div class="form-group disabled">
+                                            @Html.Label("Số CMT: (Nếu có)", new { @class = "control-label" })
+                                            @Html.TextBox("SoCMT", Model.SoCMT, new { @class = "form-control", disabled = "true" })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <!-- text input -->
+                                        <div class="form-group disabled">
+                                            @Html.Label("Người tạo", new { @class = "control-label" })
+                                            @Html.TextBox("NguoiTao", Model.NguoiTao, new { @class = "form-control", disabled = "true" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <!-- text input -->
+                                        <div class="form-group disabled">
+                                            @Html.Label("Chức vụ hiện tại", new { @class = "control-label" })
+                                            @Html.TextBox("VanPhong", Model.VanPhong.TenVanPhong, new { @class = "form-control", disabled = "true" })
+                                        </div>
+                                        </div>
+                        
+                                    <div class="col-sm-6 ">
+                                        <div class="form-group disabled">
+                                            @Html.Label("Ngày sinh", new { @class = "control-label" })
+                                            @Html.TextBox("NgaySinh", Model.NgaySinh, new { @class = "form-control", disabled = "true" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <!-- text input -->
+                                        <div class="form-group disabled">
+                                            @Html.Label("Địa chỉ", new { @class = "control-label" })
+                                            @Html.TextArea("DiaChi", null, new { @class = "form-control", disabled = "true" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-12">
+                                    <!-- textarea -->
+                                    <div class="form-group" disabled>
+                                        @Html.Label("Còn sử dụng:", new { @class = "control-label", disabled = "true" })
+                                        @Html.CheckBox("TrangThai")
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /.card-body -->
+    </div>
+</div>
+
+
+
+
+

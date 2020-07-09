@@ -1,0 +1,8 @@
+﻿@model List<SelectListItem>
+@Html.DropDownList("_LoadDanhSachTheoLoai", null, "------- Chọn thể loại -------", new { Name = "TheLoadId", @class = "form-control" })
+<script type="text/javascript" language="javascript">
+    $('#_LoadDanhSachTheoLoai').change(function () {
+        ($(this).val(), null);
+        $("#_LoadDanhSachTheoLoai").val($(this).val());
+    });
+</script>   

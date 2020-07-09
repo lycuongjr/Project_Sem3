@@ -1,0 +1,140 @@
+﻿@{
+    Layout = null;
+}
+@model HTM.Mgs.Models.SanPham
+@using HTM.Mgs.HtmlExtension
+    <div id="formSanPham">
+        @using (Html.BeginForm("Form", "SanPham", FormMethod.Post, new { @class = "productForm" }))
+        {
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <!-- text input -->
+                    <div class="form-group">
+                        @Html.Label("Tên sản phẩm:", new { @class = "control-label" })
+                        <span class="required"> (*)</span>
+                        @Html.TextBox("TenSanPham", null, new { @class = "form-control", disabled = "true" })
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        @Html.Label("Mã Sản Phẩm:", new { @class = "control-label" })
+                        <span class="required"> (*)</span>
+                        @Html.TextBox("MaSanPham", null, new { @class = "form-control", disabled = "true" })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <!-- text input -->
+                    <div class="form-group">
+                        @Html.Label("Tiêu đề", new { @class = "control-label" })
+                        <span class="required"> (*)</span>
+                        @Html.TextBox("TieuDe", null, new { @class = "form-control", disabled = "true" })
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group" disabled>
+                        @Html.Label("Thể loại:", new { @class = "control-label", disabled = "true" })
+                        <span class="required"> (*)</span>
+                        <div id="ddlTheLoai">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <!-- text input -->
+                    <div class="form-group">
+                        @Html.Label("Giá", new { @class = "control-label" })
+                        <span class="required"> (*)</span>
+                        @Html.TextBox("Gia", (Model.Gia.HasValue ? Model.Gia.Value.ToString ("N0") : ""), new { @class = "form-control", disabled = "true" })
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        @Html.Label("Số lượng:", new { @class = "control-label" })
+                        <span class="required"> (*)</span>
+                        @Html.TextBox("SoLuong", null, new { @class = "form-control", disabled = "true" })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <!-- text input -->
+                    <div class="form-group">
+                        @Html.Label("Ngày tạo", new { @class = "control-label" })
+                        <span class="required"> (*)</span>
+                        @Html.TextBox("NgayTao", null, new { @class = "form-control", disabled = "true" })
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group">
+                        @Html.Label("Người tạo:", new { @class = "control-label" })
+                        <span class="required"> (*)</span>
+                        @Html.TextBox("NguoiTao", null, new { @class = "form-control", disabled = "true" })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <!-- text input -->
+                    <div class="form-group">
+                        @Html.Label("Mô tả", new { @class = "control-label" })
+                        @Html.TextArea("MoTa", null, new { @class = "form-control", disabled = "true" })
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <!-- text input -->
+                    <div class="form-group">
+                        @Html.Label("Chi tiết", new { @class = "control-label" })
+                        @Html.TextArea("ChiTiet", null, new { @class = "form-control", disabled = "true" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <!-- textarea -->
+                <div class="form-group" disabled>
+                    @Html.Label("Còn sử dụng:", new { @class = "control-label" })
+                    @Html.CheckBox("TrangThai", new { disabled = "true" })
+                </div>
+            </div>
+            <div class="col-sm-12">
+                <!-- textarea -->
+                <div class="form-group center-block">
+                    <img src="@Model.GetDefautThumbnail()" width="100%" height="100%" />
+                </div>
+            </div>
+
+        }
+
+    </div>
+
+    <script>
+    $(document).ready(function () {
+        $("#btnGhiLai").click(function () {
+            $("#formSanPham form").submit();
+        });
+    })
+    function ListDanhMucTheLoai(TheloaiId) {
+        $.ajax({
+            url: '/SanPham/_LoadDanhSachTheoLoai',
+            data: {
+                TheloaiId: TheloaiId
+            },
+            type: "POST",
+            dataType: "html",
+            success: function (data) {
+                $("#ddlTheLoai").html(data);
+            },
+            complete: function (data) {
+            }
+        });
+    }
+       ListDanhMucTheLoai('@Model.TheLoaiId');
+    </script>
+
+

@@ -1,0 +1,147 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+@section header{
+    Yêu cầu của bạn
+}
+
+<div class="pcoded-inner-content">
+    <!-- Main-body start -->
+    <div class="main-body">
+        <div class="page-wrapper">
+            <!-- Page-body start -->
+            <div class="page-body">
+                <!-- Basic table card start -->
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Danh sách sản phẩm</h5>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="row align-items-center">
+                                <div class="col-12">
+                                    <div class="form-group">
+                                        <label>Thông tin yêu cầu</label>
+                                        <div class="card-body">
+                                            <div class="row table-responsive">
+                                                <div class="table table-bordered table-hover text-center align-middle" id="tblYeuCau">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Page-body end -->
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Hiệu chỉnh yêu cầu</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="ddlYeucaunguoidung">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+@section scripts{
+    <script>
+          function ListDanhSachYeuCau(PageCurrent) {
+            $.ajax({
+            url: '/PhongBan/_DSYeuCauChoDuyet',
+            data: {
+                PageCurrent: PageCurrent
+            },
+            type: "GET",
+            dataType: "html",
+            success: function (data) {
+                $("#tblYeuCau").html(data);
+            },
+            error: function () {
+
+            },
+            complete: function (data) {
+
+            }
+                 });
+        }
+        ListDanhSachYeuCau();
+        function TaoYeuCauSanPham(Id) {
+
+            $.ajax({
+                url: '/NhanVien/_Form/' + Id,
+                data: {
+                    Id: Id,
+
+                },
+                type: "GET",
+                dataType: "html",
+                success: function (data) {
+                    $("#ddlYeucaunguoidung").html(data);
+                }
+                ,
+                error: function () {
+
+                },
+                complete: function (data) {
+
+                }
+            });
+        }
+         function PheDuyetYeuNguoiDung(id) {
+            $.ajax({
+                url: '/PhongBan/PheDuyetYeuCau',
+                type: 'POST',
+                data: { id: id },
+                dataType: 'json',
+                success: function (data) {
+                    if (data.status) {
+                        toastr.success('Đã phê duyệt yêu cầu.')
+                        ListDanhSachYeuCau();
+                    } else {
+                        alert('Có lỗi xảy ra.')
+                    }
+                },
+                error: function (data) {
+                    alert('Không thể thay đổi trạng thái.')
+                }
+            })
+        };
+         function PheDuyetYeuCauPhongBan(id) {
+            $.ajax({
+                 url: '/PhongBan/PheDuyetYeuCauPhongBan',
+                type: 'POST',
+                data: { id: id },
+                dataType: 'json',
+                success: function (data) {
+                    if (data.status) {
+                       toastr.success('Đã phê duyệt yêu cầu.')
+                        ListDanhSachYeuCau();
+                    } else {
+                        alert('Có lỗi xảy ra.')
+                    }
+                },
+                error: function (data) {
+                    alert('Không thể thay đổi trạng thái.')
+                }
+            })
+        };
+    </script>
+}
