@@ -159,6 +159,14 @@
           <Property Name="TrangThai" Type="bit" />
           <Property Name="DaXoa" Type="bit" />
         </EntityType>
+        <EntityType Name="YeuCauDetail">
+          <Key>
+            <PropertyRef Name="NguoiDungId" />
+            <PropertyRef Name="YeuCauNguoiDungId" />
+          </Key>
+          <Property Name="NguoiDungId" Type="int" Nullable="false" />
+          <Property Name="YeuCauNguoiDungId" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="YeuCauNguoiDung">
           <Key>
             <PropertyRef Name="YeuCauNguoiDungId" />
@@ -307,6 +315,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_YeuCauDetail_NguoiDung">
+          <End Role="NguoiDung" Type="Self.NguoiDung" Multiplicity="1" />
+          <End Role="YeuCauDetail" Type="Self.YeuCauDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NguoiDung">
+              <PropertyRef Name="NguoiDungID" />
+            </Principal>
+            <Dependent Role="YeuCauDetail">
+              <PropertyRef Name="NguoiDungId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_YeuCauDetail_YeuCauNguoiDung">
+          <End Role="YeuCauNguoiDung" Type="Self.YeuCauNguoiDung" Multiplicity="1" />
+          <End Role="YeuCauDetail" Type="Self.YeuCauDetail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="YeuCauNguoiDung">
+              <PropertyRef Name="YeuCauNguoiDungId" />
+            </Principal>
+            <Dependent Role="YeuCauDetail">
+              <PropertyRef Name="YeuCauNguoiDungId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_YeuCauNguoiDung_NguoiDung">
           <End Role="NguoiDung" Type="Self.NguoiDung" Multiplicity="0..1" />
           <End Role="YeuCauNguoiDung" Type="Self.YeuCauNguoiDung" Multiplicity="*" />
@@ -354,6 +386,7 @@
           <EntitySet Name="SanPham" EntityType="Self.SanPham" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TheLoai" EntityType="Self.TheLoai" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="VanPhong" EntityType="Self.VanPhong" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="YeuCauDetail" EntityType="Self.YeuCauDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="YeuCauNguoiDung" EntityType="Self.YeuCauNguoiDung" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_BaoCao_NhapKho" Association="Self.FK_BaoCao_NhapKho">
             <End Role="NhapKho" EntitySet="NhapKho" />
@@ -398,6 +431,14 @@
           <AssociationSet Name="FK_TheLoai_SanPham" Association="Self.FK_TheLoai_SanPham">
             <End Role="SanPham" EntitySet="SanPham" />
             <End Role="TheLoai" EntitySet="TheLoai" />
+          </AssociationSet>
+          <AssociationSet Name="FK_YeuCauDetail_NguoiDung" Association="Self.FK_YeuCauDetail_NguoiDung">
+            <End Role="NguoiDung" EntitySet="NguoiDung" />
+            <End Role="YeuCauDetail" EntitySet="YeuCauDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_YeuCauDetail_YeuCauNguoiDung" Association="Self.FK_YeuCauDetail_YeuCauNguoiDung">
+            <End Role="YeuCauNguoiDung" EntitySet="YeuCauNguoiDung" />
+            <End Role="YeuCauDetail" EntitySet="YeuCauDetail" />
           </AssociationSet>
           <AssociationSet Name="FK_YeuCauNguoiDung_NguoiDung" Association="Self.FK_YeuCauNguoiDung_NguoiDung">
             <End Role="NguoiDung" EntitySet="NguoiDung" />
@@ -489,6 +530,7 @@
           <Property Name="YeuCauNguoiDungId" Type="Int32" />
           <NavigationProperty Name="SanPham" Relationship="HTM.MgsDBModel.FK_NguoiDung_SanPham" FromRole="NguoiDung" ToRole="SanPham" />
           <NavigationProperty Name="YeuCauNguoiDung" Relationship="HTM.MgsDBModel.FK_NguoiDung_YeuCauNguoiDung" FromRole="NguoiDung" ToRole="YeuCauNguoiDung" />
+          <NavigationProperty Name="YeuCauNguoiDungs1" Relationship="HTM.MgsDBModel.YeuCauDetail" FromRole="NguoiDung" ToRole="YeuCauNguoiDung" />
         </EntityType>
         <EntityType Name="NhapKho">
           <Key>
@@ -613,6 +655,7 @@
           <Property Name="TrangThai" Type="Boolean" />
           <Property Name="DaPheDuyet" Type="Boolean" />
           <NavigationProperty Name="NguoiDungs" Relationship="HTM.MgsDBModel.FK_NguoiDung_YeuCauNguoiDung" FromRole="YeuCauNguoiDung" ToRole="NguoiDung" />
+          <NavigationProperty Name="NguoiDungs1" Relationship="HTM.MgsDBModel.YeuCauDetail" FromRole="YeuCauNguoiDung" ToRole="NguoiDung" />
         </EntityType>
         <Association Name="FK_NhomNguoiDung_ChucNangNguoiDung">
           <End Role="ChucNangNguoiDung" Type="Self.ChucNangNguoiDung" Multiplicity="1" />
@@ -766,6 +809,10 @@
             <End Role="YeuCauNguoiDung" EntitySet="YeuCauNguoiDungs" />
             <End Role="NguoiDung" EntitySet="NguoiDungs" />
           </AssociationSet>
+          <AssociationSet Name="YeuCauDetail" Association="HTM.MgsDBModel.YeuCauDetail">
+            <End Role="NguoiDung" EntitySet="NguoiDungs" />
+            <End Role="YeuCauNguoiDung" EntitySet="YeuCauNguoiDungs" />
+          </AssociationSet>
         </EntityContainer>
         <Association Name="FK_BaoCao_NhapKho">
           <End Type="HTM.MgsDBModel.NhapKho" Role="NhapKho" Multiplicity="0..1" />
@@ -850,6 +897,10 @@
               <PropertyRef Name="YeuCauNguoiDungId" />
             </Dependent>
           </ReferentialConstraint>
+        </Association>
+        <Association Name="YeuCauDetail">
+          <End Type="HTM.MgsDBModel.NguoiDung" Role="NguoiDung" Multiplicity="*" />
+          <End Type="HTM.MgsDBModel.YeuCauNguoiDung" Role="YeuCauNguoiDung" Multiplicity="*" />
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -1037,6 +1088,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <AssociationSetMapping Name="YeuCauDetail" TypeName="HTM.MgsDBModel.YeuCauDetail" StoreEntitySet="YeuCauDetail">
+            <EndProperty Name="YeuCauNguoiDung">
+              <ScalarProperty Name="YeuCauNguoiDungId" ColumnName="YeuCauNguoiDungId" />
+            </EndProperty>
+            <EndProperty Name="NguoiDung">
+              <ScalarProperty Name="NguoiDungID" ColumnName="NguoiDungId" />
+            </EndProperty>
+          </AssociationSetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

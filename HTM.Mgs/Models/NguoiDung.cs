@@ -20,6 +20,7 @@ namespace HTM.Mgs.Models
         {
             this.SanPhams = new HashSet<SanPham>();
             this.YeuCauNguoiDungs = new HashSet<YeuCauNguoiDung>();
+            this.YeuCauNguoiDungs1 = new HashSet<YeuCauNguoiDung>();
         }
     
         public int NguoiDungID { get; set; }
@@ -57,6 +58,8 @@ namespace HTM.Mgs.Models
         public virtual ICollection<YeuCauNguoiDung> YeuCauNguoiDungs { get; set; }
         public virtual SanPham SanPham { get; set; }
         public virtual YeuCauNguoiDung YeuCauNguoiDung { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<YeuCauNguoiDung> YeuCauNguoiDungs1 { get; set; }
         public string GetDefautThumbnail()
         {
             if (AnhDaiDien != null && AnhDaiDien.Length > 0)

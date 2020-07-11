@@ -181,5 +181,13 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <AssociationSetMapping Name="YeuCauDetail" TypeName="HTM.MgsDBModel.YeuCauDetail" StoreEntitySet="YeuCauDetail">
+      <EndProperty Name="YeuCauNguoiDung">
+        <ScalarProperty Name="YeuCauNguoiDungId" ColumnName="YeuCauNguoiDungId" />
+      </EndProperty>
+      <EndProperty Name="NguoiDung">
+        <ScalarProperty Name="NguoiDungID" ColumnName="NguoiDungId" />
+      </EndProperty>
+    </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping>

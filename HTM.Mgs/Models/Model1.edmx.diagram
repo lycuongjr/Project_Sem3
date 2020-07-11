@@ -30,6 +30,7 @@
         <AssociationConnector Association="HTM.MgsDBModel.FK_TheLoai_SanPham" />
         <AssociationConnector Association="HTM.MgsDBModel.FK_NguoiDung_SanPham" />
         <AssociationConnector Association="HTM.MgsDBModel.FK_NguoiDung_YeuCauNguoiDung" />
+        <AssociationConnector Association="HTM.MgsDBModel.YeuCauDetail" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

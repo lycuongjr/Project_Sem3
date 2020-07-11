@@ -30,7 +30,6 @@ namespace HTM.Mgs.Service
             var list = dbContext.YeuCauNguoiDungs.Where(x => x.DaPheDuyet == true && x.TrangThai == true ).AsEnumerable();
             return list.OrderByDescending(x => x.NgayTao).ToPagedList(PageCurrent, PageSize);
         }
-
         public YeuCauNguoiDung InsertOrUpdate(YeuCauNguoiDung yc)
         {
             if (yc == null) return null;
@@ -44,13 +43,12 @@ namespace HTM.Mgs.Service
                     data.NguoiDungId = yc.NguoiDungId;
                     data.SanPhamId = yc.SanPhamId;
                     data.SoLuong = yc.SoLuong;
-                    data.ThanhTien = yc.ThanhTien;                     
+                    data.ThanhTien = yc.SoLuong * yc.SanPham.Gia;                     
                     Update(data);
                     return data;
                 }
                 else
                 {
-
                     Insert(yc);
                     return yc;
 

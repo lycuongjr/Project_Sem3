@@ -18,6 +18,7 @@ namespace HTM.Mgs.Models
         public YeuCauNguoiDung()
         {
             this.NguoiDungs = new HashSet<NguoiDung>();
+            this.NguoiDungs1 = new HashSet<NguoiDung>();
         }
     
         public int YeuCauNguoiDungId { get; set; }
@@ -37,5 +38,7 @@ namespace HTM.Mgs.Models
         public virtual TheLoai TheLoai { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<NguoiDung> NguoiDungs { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<NguoiDung> NguoiDungs1 { get; set; }
     }
 }

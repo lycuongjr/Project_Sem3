@@ -73,6 +73,7 @@
     <Property Name="YeuCauNguoiDungId" Type="Int32" />
     <NavigationProperty Name="SanPham" Relationship="HTM.MgsDBModel.FK_NguoiDung_SanPham" FromRole="NguoiDung" ToRole="SanPham" />
     <NavigationProperty Name="YeuCauNguoiDung" Relationship="HTM.MgsDBModel.FK_NguoiDung_YeuCauNguoiDung" FromRole="NguoiDung" ToRole="YeuCauNguoiDung" />
+    <NavigationProperty Name="YeuCauNguoiDungs1" Relationship="HTM.MgsDBModel.YeuCauDetail" FromRole="NguoiDung" ToRole="YeuCauNguoiDung" />
   </EntityType>
   <EntityType Name="NhapKho">
     <Key>
@@ -197,6 +198,7 @@
     <Property Name="TrangThai" Type="Boolean" />
     <Property Name="DaPheDuyet" Type="Boolean" />
     <NavigationProperty Name="NguoiDungs" Relationship="HTM.MgsDBModel.FK_NguoiDung_YeuCauNguoiDung" FromRole="YeuCauNguoiDung" ToRole="NguoiDung" />
+    <NavigationProperty Name="NguoiDungs1" Relationship="HTM.MgsDBModel.YeuCauDetail" FromRole="YeuCauNguoiDung" ToRole="NguoiDung" />
   </EntityType>
   <Association Name="FK_NhomNguoiDung_ChucNangNguoiDung">
     <End Role="ChucNangNguoiDung" Type="Self.ChucNangNguoiDung" Multiplicity="1" />
@@ -350,6 +352,10 @@
       <End Role="YeuCauNguoiDung" EntitySet="YeuCauNguoiDungs" />
       <End Role="NguoiDung" EntitySet="NguoiDungs" />
     </AssociationSet>
+    <AssociationSet Name="YeuCauDetail" Association="HTM.MgsDBModel.YeuCauDetail">
+      <End Role="NguoiDung" EntitySet="NguoiDungs" />
+      <End Role="YeuCauNguoiDung" EntitySet="YeuCauNguoiDungs" />
+    </AssociationSet>
   </EntityContainer>
   <Association Name="FK_BaoCao_NhapKho">
     <End Type="HTM.MgsDBModel.NhapKho" Role="NhapKho" Multiplicity="0..1" />
@@ -434,5 +440,9 @@
         <PropertyRef Name="YeuCauNguoiDungId" />
       </Dependent>
     </ReferentialConstraint>
+  </Association>
+  <Association Name="YeuCauDetail">
+    <End Type="HTM.MgsDBModel.NguoiDung" Role="NguoiDung" Multiplicity="*" />
+    <End Type="HTM.MgsDBModel.YeuCauNguoiDung" Role="YeuCauNguoiDung" Multiplicity="*" />
   </Association>
 </Schema>

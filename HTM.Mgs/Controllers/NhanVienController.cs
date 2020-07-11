@@ -15,14 +15,20 @@ namespace HTM.Mgs.Controllers
         public ActionResult Index()
         {
             HTMDb db = new HTMDb();
-            var DSYeuCauTuNguoiDung = db.YeuCauNguoiDungs.Where(x => x.DaPheDuyet == false && x.TrangThai == false).Count();
-            var DSYeuCauDaDuyetTuNguoiDung = db.YeuCauNguoiDungs.Where(x => x.DaPheDuyet == true && x.TrangThai == true).Count();
-            var SanPhamChoDuyet = db.SanPhams.Where(x => x.DaXoa == false && x.DaPheDuyet == false && x.TrangThai == true && x.DaNhapKho == true).Count();
-            var SanPhamChoDuyetTrongKho = db.SanPhams.Where(x => x.DaXoa == false && x.DaNhapKho == false && x.TrangThai == false).Count();
-            ViewBag.DSYeuCauTuNguoiDung = DSYeuCauTuNguoiDung.ToString();
-            ViewBag.DSYeuCauDaDuyetTuNguoiDung = DSYeuCauDaDuyetTuNguoiDung.ToString();
-            ViewBag.SanPhamChoDuyet = SanPhamChoDuyet.ToString();
-            ViewBag.SanPhamChoDuyetTrongKho = SanPhamChoDuyetTrongKho.ToString();
+            var YeuCauNguoiDung = db.YeuCauNguoiDungs.Where(x => x.DaPheDuyet == false && x.TrangThai == false).Count();
+            var YeuCauNguoiDungLenQuanTri = db.YeuCauNguoiDungs.Where(x => x.DaPheDuyet == false && x.TrangThai == true).Count();
+            var YeuCauDuyetLenPhongBan = db.YeuCauNguoiDungs.Where(x => x.DaPheDuyet == false && x.TrangThai == false).Count();
+            var SanPhamChoNhapKho = db.SanPhams.Where(x => x.DaXoa == false && x.DaNhapKho == true && x.DaPheDuyet == false && x.SoLuong >= 0).Count();
+            var SanPhamHetHang = db.SanPhams.Where(x => x.DaXoa == false && x.DaNhapKho == true && x.SoLuong <= 0).Count();
+            var YeuCauDaDuyet = db.YeuCauNguoiDungs.Where(x => x.DaPheDuyet == true && x.TrangThai == true).Count();
+
+
+            ViewBag.YeuCauNguoiDung = YeuCauNguoiDung.ToString();
+            ViewBag.YeuCauNguoiDungLenQuanTri = YeuCauNguoiDungLenQuanTri.ToString();
+            ViewBag.YeuCauDuyetLenPhongBan = YeuCauDuyetLenPhongBan.ToString();
+            ViewBag.SanPhamChoNhapKho = SanPhamChoNhapKho.ToString();
+            ViewBag.SanPhamHetHang = SanPhamHetHang.ToString();
+            ViewBag.YeuCauDaDuyet = YeuCauDaDuyet.ToString();
             return View();
         }
         public ActionResult DanhSachYeuCau()
@@ -41,14 +47,20 @@ namespace HTM.Mgs.Controllers
         public ActionResult DanhSachYeuCauQuanTri()
         {
             HTMDb db = new HTMDb();
-            var DSYeuCauTuNguoiDung = db.YeuCauNguoiDungs.Where(x => x.DaPheDuyet == false && x.TrangThai == false).Count();
-            var DSYeuCauDaDuyetTuNguoiDung = db.YeuCauNguoiDungs.Where(x => x.DaPheDuyet == true && x.TrangThai == true).Count();
-            var SanPhamChoDuyet = db.SanPhams.Where(x => x.DaXoa == false && x.DaPheDuyet == false && x.TrangThai == true && x.DaNhapKho == true).Count();
-            var SanPhamChoDuyetTrongKho = db.SanPhams.Where(x => x.DaXoa == false && x.DaNhapKho == false && x.TrangThai == false).Count();
-            ViewBag.DSYeuCauTuNguoiDung = DSYeuCauTuNguoiDung.ToString();
-            ViewBag.DSYeuCauDaDuyetTuNguoiDung = DSYeuCauDaDuyetTuNguoiDung.ToString();
-            ViewBag.SanPhamChoDuyet = SanPhamChoDuyet.ToString();
-            ViewBag.SanPhamChoDuyetTrongKho = SanPhamChoDuyetTrongKho.ToString();
+            var YeuCauNguoiDung = db.YeuCauNguoiDungs.Where(x => x.DaPheDuyet == false && x.TrangThai == false).Count();
+            var YeuCauNguoiDungLenQuanTri = db.YeuCauNguoiDungs.Where(x => x.DaPheDuyet == false && x.TrangThai == true).Count();
+            var YeuCauDuyetLenPhongBan = db.YeuCauNguoiDungs.Where(x => x.DaPheDuyet == false && x.TrangThai == false).Count();
+            var SanPhamChoNhapKho = db.SanPhams.Where(x => x.DaXoa == false && x.DaNhapKho == true && x.DaPheDuyet == false && x.SoLuong >= 0).Count();
+            var SanPhamHetHang = db.SanPhams.Where(x => x.DaXoa == false && x.DaNhapKho == true && x.SoLuong <= 0).Count();
+            var YeuCauDaDuyet = db.YeuCauNguoiDungs.Where(x => x.DaPheDuyet == true && x.TrangThai == true).Count();
+
+
+            ViewBag.YeuCauNguoiDung = YeuCauNguoiDung.ToString();
+            ViewBag.YeuCauNguoiDungLenQuanTri = YeuCauNguoiDungLenQuanTri.ToString();
+            ViewBag.YeuCauDuyetLenPhongBan = YeuCauDuyetLenPhongBan.ToString();
+            ViewBag.SanPhamChoNhapKho = SanPhamChoNhapKho.ToString();
+            ViewBag.SanPhamHetHang = SanPhamHetHang.ToString();
+            ViewBag.YeuCauDaDuyet = YeuCauDaDuyet.ToString();
             return View();
         }
         public ActionResult DanhSachDaDuocDuyet(int? id)
@@ -56,27 +68,39 @@ namespace HTM.Mgs.Controllers
             var session = (UserLogin)Session[CommonConstants.USER_SESSION];
             session.UserID = id;
             HTMDb db = new HTMDb();
-            var DSYeuCauTuNguoiDung = db.YeuCauNguoiDungs.Where(x => x.DaPheDuyet == false && x.TrangThai == false).Count();
-            var DSYeuCauDaDuyetTuNguoiDung = db.YeuCauNguoiDungs.Where(x => x.DaPheDuyet == true && x.TrangThai == true).Count();
-            var SanPhamChoDuyet = db.SanPhams.Where(x => x.DaXoa == false && x.DaPheDuyet == false && x.TrangThai == true && x.DaNhapKho == true).Count();
-            var SanPhamChoDuyetTrongKho = db.SanPhams.Where(x => x.DaXoa == false && x.DaNhapKho == false && x.TrangThai == false).Count();
-            ViewBag.DSYeuCauTuNguoiDung = DSYeuCauTuNguoiDung.ToString();
-            ViewBag.DSYeuCauDaDuyetTuNguoiDung = DSYeuCauDaDuyetTuNguoiDung.ToString();
-            ViewBag.SanPhamChoDuyet = SanPhamChoDuyet.ToString();
-            ViewBag.SanPhamChoDuyetTrongKho = SanPhamChoDuyetTrongKho.ToString();
+            var YeuCauNguoiDung = db.YeuCauNguoiDungs.Where(x => x.DaPheDuyet == false && x.TrangThai == false).Count();
+            var YeuCauNguoiDungLenQuanTri = db.YeuCauNguoiDungs.Where(x => x.DaPheDuyet == false && x.TrangThai == true).Count();
+            var YeuCauDuyetLenPhongBan = db.YeuCauNguoiDungs.Where(x => x.DaPheDuyet == false && x.TrangThai == false).Count();
+            var SanPhamChoNhapKho = db.SanPhams.Where(x => x.DaXoa == false && x.DaNhapKho == true && x.DaPheDuyet == false && x.SoLuong >= 0).Count();
+            var SanPhamHetHang = db.SanPhams.Where(x => x.DaXoa == false && x.DaNhapKho == true && x.SoLuong <= 0).Count();
+            var YeuCauDaDuyet = db.YeuCauNguoiDungs.Where(x => x.DaPheDuyet == true && x.TrangThai == true).Count();
+
+
+            ViewBag.YeuCauNguoiDung = YeuCauNguoiDung.ToString();
+            ViewBag.YeuCauNguoiDungLenQuanTri = YeuCauNguoiDungLenQuanTri.ToString();
+            ViewBag.YeuCauDuyetLenPhongBan = YeuCauDuyetLenPhongBan.ToString();
+            ViewBag.SanPhamChoNhapKho = SanPhamChoNhapKho.ToString();
+            ViewBag.SanPhamHetHang = SanPhamHetHang.ToString();
+            ViewBag.YeuCauDaDuyet = YeuCauDaDuyet.ToString();
             return View();
         }
         public ActionResult DanhSachDaYeuCau()
         {
             HTMDb db = new HTMDb();
-            var DSYeuCauTuNguoiDung = db.YeuCauNguoiDungs.Where(x => x.DaPheDuyet == false && x.TrangThai == false).Count();
-            var DSYeuCauDaDuyetTuNguoiDung = db.YeuCauNguoiDungs.Where(x => x.DaPheDuyet == true && x.TrangThai == true).Count();
-            var SanPhamChoDuyet = db.SanPhams.Where(x => x.DaXoa == false && x.DaPheDuyet == false && x.TrangThai == true && x.DaNhapKho == true).Count();
-            var SanPhamChoDuyetTrongKho = db.SanPhams.Where(x => x.DaXoa == false && x.DaNhapKho == false && x.TrangThai == false).Count();
-            ViewBag.DSYeuCauTuNguoiDung = DSYeuCauTuNguoiDung.ToString();
-            ViewBag.DSYeuCauDaDuyetTuNguoiDung = DSYeuCauDaDuyetTuNguoiDung.ToString();
-            ViewBag.SanPhamChoDuyet = SanPhamChoDuyet.ToString();
-            ViewBag.SanPhamChoDuyetTrongKho = SanPhamChoDuyetTrongKho.ToString();
+            var YeuCauNguoiDung = db.YeuCauNguoiDungs.Where(x => x.DaPheDuyet == false && x.TrangThai == false).Count();
+            var YeuCauNguoiDungLenQuanTri = db.YeuCauNguoiDungs.Where(x => x.DaPheDuyet == false && x.TrangThai == true).Count();
+            var YeuCauDuyetLenPhongBan = db.YeuCauNguoiDungs.Where(x => x.DaPheDuyet == false && x.TrangThai == false).Count();
+            var SanPhamChoNhapKho = db.SanPhams.Where(x => x.DaXoa == false && x.DaNhapKho == true && x.DaPheDuyet == false && x.SoLuong >= 0).Count();
+            var SanPhamHetHang = db.SanPhams.Where(x => x.DaXoa == false && x.DaNhapKho == true && x.SoLuong <= 0).Count();
+            var YeuCauDaDuyet = db.YeuCauNguoiDungs.Where(x => x.DaPheDuyet == true && x.TrangThai == true).Count();
+
+
+            ViewBag.YeuCauNguoiDung = YeuCauNguoiDung.ToString();
+            ViewBag.YeuCauNguoiDungLenQuanTri = YeuCauNguoiDungLenQuanTri.ToString();
+            ViewBag.YeuCauDuyetLenPhongBan = YeuCauDuyetLenPhongBan.ToString();
+            ViewBag.SanPhamChoNhapKho = SanPhamChoNhapKho.ToString();
+            ViewBag.SanPhamHetHang = SanPhamHetHang.ToString();
+            ViewBag.YeuCauDaDuyet = YeuCauDaDuyet.ToString();
             return View();
         }
         public PartialViewResult _LoadDanhSachTheoLoai(int? TheloaiId, int? SanPhamId)
@@ -120,8 +144,7 @@ namespace HTM.Mgs.Controllers
             nv.NguoiDungId = session.UserID;
             nv.SanPhamId = SanPhamId;
             nv.TheLoaiId = TheLoaiID;
-            nv.SoLuong = SoLuong;
-            nv.ThanhTien = ThanhTien;
+            nv.SoLuong = SoLuong;        
             nv.NguoiDungId = session.UserID;
             if (session.NhomQuyenSuDungID == "EMPLOYEE")
             {

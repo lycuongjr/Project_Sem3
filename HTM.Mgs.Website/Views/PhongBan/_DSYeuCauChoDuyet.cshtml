@@ -91,7 +91,7 @@ column.For(m => Html.StatusDisplay(m.TrangThai)).Named("Trạng thái").Attribut
                 column.For(m => m.SoLuong).Named("Số lượng").Attributes(style => "width:20%");
                 column.For(m => m.TheLoai.TenTheLoai).Named("Thể loại").Attributes(style => "width:20%");
                 column.For(m => m.NgayTao).Named("Ngày tạo").Attributes(style => "width:10%");
-                column.For(m => (m.NguoiDung.GioiHan - m.SanPham.Gia * m.SoLuong)).Named("Tổng tiền").Attributes(style => "width:10%");
+                column.For(m => (m.SanPham.Gia  * m.SoLuong)).Named("Tổng tiền").Attributes(style => "width:10%");
             }).Empty("Chưa có dữ liệu sản phẩm")
         }
 
